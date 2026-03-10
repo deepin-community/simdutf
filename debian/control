@@ -1,15 +1,227 @@
-Source: template-repository
-Section: unknown
-Priority: optional
-Maintainer: Tsic404 <liuheng@deepin.org>
-Build-Depends: debhelper (>= 11)
-Standards-Version: 4.1.3
-Homepage: https://github.com/deepin-community/template-repository
-#Vcs-Browser: https://salsa.debian.org/debian/deepin-community-template-repository
-#Vcs-Git: https://salsa.debian.org/debian/deepin-community-template-repository.git
+Source: simdutf
+Section: libs
+Homepage: https://simdutf.github.io/simdutf/
+Standards-Version: 4.7.3
+Vcs-Git: https://salsa.debian.org/debian/simdutf.git
+Vcs-Browser: https://salsa.debian.org/debian/simdutf
+Maintainer: Mo Zhou <lumin@debian.org>
+Uploaders: Jeremy Bícha <jbicha@ubuntu.com>
+Build-Depends: debhelper-compat (= 13), cmake, python3,
 
-Package: template-repository
+Package: libsimdutf-dev
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Multi-Arch: same
+Section: libdevel
+Depends: libsimdutf31 (= ${binary:Version}),
+	 ${misc:Depends}
+Description: Fast Unicode validation and transcoding - development files
+ Most modern software relies on the Unicode standard. In memory, Unicode
+ strings are represented using either UTF-8 or UTF-16. The UTF-8 format is the
+ de facto standard on the web (JSON, HTML, etc.) and it has been adopted as the
+ default in many popular programming languages (Go, Zig, Rust, Swift, etc.).
+ The UTF-16 format is standard in Java, C# and in many Windows technologies.
+ .
+ Not all sequences of bytes are valid Unicode strings. It is unsafe to use
+ Unicode strings in UTF-8 and UTF-16LE without first validating them.
+ Furthermore, we often need to convert strings from one encoding to another, by
+ a process called transcoding. For security purposes, such transcoding should
+ be validating: it should refuse to transcode incorrect strings.
+ .
+ This library provide fast Unicode functions such as
+ .
+  * ASCII, UTF-8, UTF-16LE/BE and UTF-32 validation, with and without error
+    identification,
+  * Latin1 to UTF-8 transcoding,
+  * Latin1 to UTF-16LE/BE transcoding
+  * Latin1 to UTF-32 transcoding
+  * UTF-8 to Latin1 transcoding, with or without validation, with and without
+    error identification,
+  * UTF-8 to UTF-16LE/BE transcoding, with or without validation, with and
+    without error identification,
+  * UTF-8 to UTF-32 transcoding, with or without validation, with and without
+    error identification,
+  * UTF-16LE/BE to Latin1 transcoding, with or without validation, with and
+    without error identification,
+  * UTF-16LE/BE to UTF-8 transcoding, with or without validation, with and
+    without error identification,
+  * UTF-32 to Latin1 transcoding, with or without validation, with and without
+    error identification,
+  * UTF-32 to UTF-8 transcoding, with or without validation, with and without
+    error identification,
+  * UTF-32 to UTF-16LE/BE transcoding, with or without validation, with and
+    without error identification,
+  * UTF-16LE/BE to UTF-32 transcoding, with or without validation, with and
+    without error identification,
+  * From an UTF-8 string, compute the size of the Latin1 equivalent string,
+  * From an UTF-8 string, compute the size of the UTF-16 equivalent string,
+  * From an UTF-8 string, compute the size of the UTF-32 equivalent string
+    (equivalent to UTF-8 character counting),
+  * From an UTF-16LE/BE string, compute the size of the Latin1 equivalent
+    string,
+  * From an UTF-16LE/BE string, compute the size of the UTF-8 equivalent
+    string,
+  * From an UTF-32 string, compute the size of the UTF-8 or UTF-16LE equivalent
+    string,
+  * From an UTF-16LE/BE string, compute the size of the UTF-32 equivalent
+    string (equivalent to UTF-16 character counting),
+  * UTF-8 and UTF-16LE/BE character counting,
+  * UTF-16 endianness change (UTF16-LE/BE to UTF-16-BE/LE),
+  * WHATWG forgiving-base64 (with or without URL encoding) to binary,
+  * Binary to base64 (with or without URL encoding).
+ .
+ The functions are accelerated using SIMD instructions (e.g., ARM NEON, SSE,
+ AVX, AVX-512, RISC-V Vector Extension, LoongSon, POWER, etc.). When your
+ strings contain hundreds of characters, we can often transcode them at speeds
+ exceeding a billion characters per second. You should expect high speeds not
+ only with English strings (ASCII) but also Chinese, Japanese, Arabic, and so
+ forth. We handle the full character range (including, for example, emojis).
+ .
+ The library compiles down to a small library of a few hundred kilobytes. Our
+ functions are exception-free and non allocating. We have extensive tests and
+ extensive benchmarks.
+ .
+ This package ships the development files.
+
+Package: libsimdutf31
+Architecture: any
+Multi-Arch: same
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Fast Unicode validation and transcoding
+ Most modern software relies on the Unicode standard. In memory, Unicode
+ strings are represented using either UTF-8 or UTF-16. The UTF-8 format is the
+ de facto standard on the web (JSON, HTML, etc.) and it has been adopted as the
+ default in many popular programming languages (Go, Zig, Rust, Swift, etc.).
+ The UTF-16 format is standard in Java, C# and in many Windows technologies.
+ .
+ Not all sequences of bytes are valid Unicode strings. It is unsafe to use
+ Unicode strings in UTF-8 and UTF-16LE without first validating them.
+ Furthermore, we often need to convert strings from one encoding to another, by
+ a process called transcoding. For security purposes, such transcoding should
+ be validating: it should refuse to transcode incorrect strings.
+ .
+ This library provide fast Unicode functions such as
+ .
+  * ASCII, UTF-8, UTF-16LE/BE and UTF-32 validation, with and without error
+    identification,
+  * Latin1 to UTF-8 transcoding,
+  * Latin1 to UTF-16LE/BE transcoding
+  * Latin1 to UTF-32 transcoding
+  * UTF-8 to Latin1 transcoding, with or without validation, with and without
+    error identification,
+  * UTF-8 to UTF-16LE/BE transcoding, with or without validation, with and
+    without error identification,
+  * UTF-8 to UTF-32 transcoding, with or without validation, with and without
+    error identification,
+  * UTF-16LE/BE to Latin1 transcoding, with or without validation, with and
+    without error identification,
+  * UTF-16LE/BE to UTF-8 transcoding, with or without validation, with and
+    without error identification,
+  * UTF-32 to Latin1 transcoding, with or without validation, with and without
+    error identification,
+  * UTF-32 to UTF-8 transcoding, with or without validation, with and without
+    error identification,
+  * UTF-32 to UTF-16LE/BE transcoding, with or without validation, with and
+    without error identification,
+  * UTF-16LE/BE to UTF-32 transcoding, with or without validation, with and
+    without error identification,
+  * From an UTF-8 string, compute the size of the Latin1 equivalent string,
+  * From an UTF-8 string, compute the size of the UTF-16 equivalent string,
+  * From an UTF-8 string, compute the size of the UTF-32 equivalent string
+    (equivalent to UTF-8 character counting),
+  * From an UTF-16LE/BE string, compute the size of the Latin1 equivalent
+    string,
+  * From an UTF-16LE/BE string, compute the size of the UTF-8 equivalent
+    string,
+  * From an UTF-32 string, compute the size of the UTF-8 or UTF-16LE equivalent
+    string,
+  * From an UTF-16LE/BE string, compute the size of the UTF-32 equivalent
+    string (equivalent to UTF-16 character counting),
+  * UTF-8 and UTF-16LE/BE character counting,
+  * UTF-16 endianness change (UTF16-LE/BE to UTF-16-BE/LE),
+  * WHATWG forgiving-base64 (with or without URL encoding) to binary,
+  * Binary to base64 (with or without URL encoding).
+ .
+ The functions are accelerated using SIMD instructions (e.g., ARM NEON, SSE,
+ AVX, AVX-512, RISC-V Vector Extension, LoongSon, POWER, etc.). When your
+ strings contain hundreds of characters, we can often transcode them at speeds
+ exceeding a billion characters per second. You should expect high speeds not
+ only with English strings (ASCII) but also Chinese, Japanese, Arabic, and so
+ forth. We handle the full character range (including, for example, emojis).
+ .
+ The library compiles down to a small library of a few hundred kilobytes. Our
+ functions are exception-free and non allocating. We have extensive tests and
+ extensive benchmarks.
+ .
+ This package ships the shared object.
+
+Package: libsimdutf-tools
+Architecture: any
+Section: misc
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Fast Unicode validation and transcoding - utilities
+ Most modern software relies on the Unicode standard. In memory, Unicode
+ strings are represented using either UTF-8 or UTF-16. The UTF-8 format is the
+ de facto standard on the web (JSON, HTML, etc.) and it has been adopted as the
+ default in many popular programming languages (Go, Zig, Rust, Swift, etc.).
+ The UTF-16 format is standard in Java, C# and in many Windows technologies.
+ .
+ Not all sequences of bytes are valid Unicode strings. It is unsafe to use
+ Unicode strings in UTF-8 and UTF-16LE without first validating them.
+ Furthermore, we often need to convert strings from one encoding to another, by
+ a process called transcoding. For security purposes, such transcoding should
+ be validating: it should refuse to transcode incorrect strings.
+ .
+ This library provide fast Unicode functions such as
+ .
+  * ASCII, UTF-8, UTF-16LE/BE and UTF-32 validation, with and without error
+    identification,
+  * Latin1 to UTF-8 transcoding,
+  * Latin1 to UTF-16LE/BE transcoding
+  * Latin1 to UTF-32 transcoding
+  * UTF-8 to Latin1 transcoding, with or without validation, with and without
+    error identification,
+  * UTF-8 to UTF-16LE/BE transcoding, with or without validation, with and
+    without error identification,
+  * UTF-8 to UTF-32 transcoding, with or without validation, with and without
+    error identification,
+  * UTF-16LE/BE to Latin1 transcoding, with or without validation, with and
+    without error identification,
+  * UTF-16LE/BE to UTF-8 transcoding, with or without validation, with and
+    without error identification,
+  * UTF-32 to Latin1 transcoding, with or without validation, with and without
+    error identification,
+  * UTF-32 to UTF-8 transcoding, with or without validation, with and without
+    error identification,
+  * UTF-32 to UTF-16LE/BE transcoding, with or without validation, with and
+    without error identification,
+  * UTF-16LE/BE to UTF-32 transcoding, with or without validation, with and
+    without error identification,
+  * From an UTF-8 string, compute the size of the Latin1 equivalent string,
+  * From an UTF-8 string, compute the size of the UTF-16 equivalent string,
+  * From an UTF-8 string, compute the size of the UTF-32 equivalent string
+    (equivalent to UTF-8 character counting),
+  * From an UTF-16LE/BE string, compute the size of the Latin1 equivalent
+    string,
+  * From an UTF-16LE/BE string, compute the size of the UTF-8 equivalent
+    string,
+  * From an UTF-32 string, compute the size of the UTF-8 or UTF-16LE equivalent
+    string,
+  * From an UTF-16LE/BE string, compute the size of the UTF-32 equivalent
+    string (equivalent to UTF-16 character counting),
+  * UTF-8 and UTF-16LE/BE character counting,
+  * UTF-16 endianness change (UTF16-LE/BE to UTF-16-BE/LE),
+  * WHATWG forgiving-base64 (with or without URL encoding) to binary,
+  * Binary to base64 (with or without URL encoding).
+ .
+ The functions are accelerated using SIMD instructions (e.g., ARM NEON, SSE,
+ AVX, AVX-512, RISC-V Vector Extension, LoongSon, POWER, etc.). When your
+ strings contain hundreds of characters, we can often transcode them at speeds
+ exceeding a billion characters per second. You should expect high speeds not
+ only with English strings (ASCII) but also Chinese, Japanese, Arabic, and so
+ forth. We handle the full character range (including, for example, emojis).
+ .
+ The library compiles down to a small library of a few hundred kilobytes. Our
+ functions are exception-free and non allocating. We have extensive tests and
+ extensive benchmarks.
+ .
+ This package ships several command line tools.
