@@ -1,0 +1,8 @@
+Tests: ctest-suite
+Depends:
+ @,
+ build-essential,
+ cmake,
+ ninja-build,
+ python3
+Restrictions: allow-stderr, rw-build-tree

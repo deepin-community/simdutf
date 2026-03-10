@@ -1,0 +1,22 @@
+#!/bin/sh
+set -e
+
+mkdir -p build-autopkgtest
+cd build-autopkgtest
+
+# Using CMAKE_SKIP_RPATH to prevent CMake from being helpful manipulating the RPATH of the test
+# binaries to point to the *.so built by this script. We want the linker to point to the libs
+# provided by the package instead.
+cmake .. -G Ninja \
+    -DSIMDUTF_BENCHMARKS=OFF \
+    -DBUILD_SHARED_LIBS=ON \
+    -DCMAKE_SKIP_RPATH=ON \
+    -DCMAKE_BUILD_TYPE=Release
+
+# Unfortunately CMake doesn't create a target to build just tests and upstream doesn't do so
+# manually as well, so we need to build everything to trigger building the unit tests.
+# Using just the 'tests/install' CMake target wouldn't be enough as some tests
+# wouldn't run (such as the amalgamation_demo) and autopkgtests would fail.
+cmake --build . --target all
+
+ctest --output-on-failure
