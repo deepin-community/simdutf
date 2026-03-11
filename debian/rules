@@ -7,9 +7,11 @@ include /usr/share/dpkg/architecture.mk
 
 # Note: _STRIP operations needs to be done before including buildflags.mk.
 ifeq ($(DEB_BUILD_ARCH),loong64)
-	# FIXME: -mlsx breaks build on LoongArch with GCC 12.
+	# FIXME: -mlsx breaks build on LoongArch.
 	export DEB_CFLAGS_MAINT_STRIP = -mlsx
 	export DEB_CXXFLAGS_MAINT_STRIP = -mlsx
+	# Disable LASX/LSX implementations
+	export DEB_CXXFLAGS_MAINT_APPEND = -DSIMDUTF_IMPLEMENTATION_LASX=0 -DSIMDUTF_IMPLEMENTATION_LSX=0
 endif
 
 %:
